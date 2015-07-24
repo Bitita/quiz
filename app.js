@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 
 var routes = require('./routes/index');
-//se quita para quitar la gestión de usuarios
+//se quita para quitar la gestiï¿½n de usuarios
 //var users = require('./routes/users');
 
 var app = express();
@@ -24,34 +24,31 @@ app.use(partials());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 
+
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use('/', routes);
 
-//se quita para quitar la gestión de usuarios
+//se quita para quitar la gestiï¿½n de usuarios
 //app.use('/users', users);
 
 
-//gestión de errores
+//gestiï¿½n de errores
 //catch 404 and forward to error handler
 
 app.use(function(req, res, next) {
-    
   var err = new Error('Not Found');
-    
   err.status = 404;
     next(err);
-
 });
 
 
-
 // error handlers
-
 
 
 // development error handler
