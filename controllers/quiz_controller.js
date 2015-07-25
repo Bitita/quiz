@@ -29,6 +29,13 @@ exports.show = function(req, res) {
 	res.render('quizes/show', {quiz: req.quiz, errors: []});
 };
 
+// DELETE /quizes/:quizId
+exports.destroy = function(req, res) {
+	req.quiz.destroy().then( function() {
+		res.redirect('/quizes');
+	}).catch(function(error){ next(error)});
+}; 
+
 // GET /quizes/:quizId/answer
 exports.answer = function(req, res) {
 	var resultado = 'Incorrecto';
