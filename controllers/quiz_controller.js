@@ -14,13 +14,21 @@ exports.load = function(req, res,  next, quizId) {
 	).catch(function(error) {next(error);});
 };
 
-// GET /quizes
+// GET /quizes y  /quizes?search
 exports.index = function(req, res) {
+if (req.query.search){
+ 	 var search = '%' + (req.query.search).replace(/ /g,'%') + '%';
+	 models.Quiz.findAll({where:["pregunta like ?",search], order: 'pregunta ASC'}).then(function(quizes){
+ 	 res.render('quizes/index', {quizes: quizes, errors: []});
+ 	}).catch(function(error) {next(error);})
+}
+else {
 	models.Quiz.findAll().then(
 		function(quizes) {
 		res.render('quizes/index.ejs', {quizes: quizes, errors: []});
 	   }
    ).catch(function(error){next(error);});
+  }
 };
 
 
@@ -33,7 +41,7 @@ exports.show = function(req, res) {
 exports.destroy = function(req, res) {
 	req.quiz.destroy().then( function() {
 		res.redirect('/quizes');
-	}).catch(function(error){ next(error)});
+	}).catch(function(error){next(error)});
 }; 
 
 // GET /quizes/:quizId/answer
